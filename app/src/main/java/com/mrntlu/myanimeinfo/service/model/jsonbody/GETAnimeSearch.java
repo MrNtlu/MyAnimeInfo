@@ -29,7 +29,6 @@ public class GETAnimeSearch {
     }
 
     public String getImage_url() {
-
         return image_url;
     }
 

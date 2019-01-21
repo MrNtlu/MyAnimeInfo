@@ -63,7 +63,5 @@ public class InnerFragmentAnimeReviews extends Fragment implements OnReviewsLoad
         animeReviewsRV.setLayoutManager(linearLayoutManager);
         animeReviewsRV.setAdapter(adapter);
         reviewProgress.setVisibility(View.GONE);
-
-
     }
 }

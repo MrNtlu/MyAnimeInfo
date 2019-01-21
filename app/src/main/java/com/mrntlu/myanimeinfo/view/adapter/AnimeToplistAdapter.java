@@ -14,7 +14,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.mrntlu.myanimeinfo.R;
-import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeSearch;
+import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeTopList;
 import com.mrntlu.myanimeinfo.view.ui.FragmentAnimeInfo;
 import java.util.List;
 import androidx.annotation.NonNull;
@@ -22,39 +22,34 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.MyViewHolder> {
+public class AnimeToplistAdapter extends RecyclerView.Adapter<AnimeToplistAdapter.ToplistViewHolder> {
 
     private Context context;
-    private List<GETAnimeSearch> animeSearchList;
+    private List<GETAnimeTopList> topList;
 
-    public AnimeSearchAdapter(Context context, List<GETAnimeSearch> animeSearchList) {
+    public AnimeToplistAdapter(Context context, List<GETAnimeTopList> topList) {
         this.context = context;
-        this.animeSearchList = animeSearchList;
+        this.topList = topList;
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ToplistViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v= LayoutInflater.from(context).inflate(R.layout.cell_anime_showcase,parent,false);
-        return new MyViewHolder(v);
+        return new ToplistViewHolder(v);
     }
 
     @Override
-    public int getItemViewType(int position) {
-        return position;
-    }
+    public void onBindViewHolder(@NonNull final ToplistViewHolder holder, int position) {
+        final GETAnimeTopList animeItem=topList.get(position);
 
-    @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
-        final GETAnimeSearch searchItem=animeSearchList.get(position);
-
-        holder.titleText.setText(searchItem.getTitle());
-        holder.typeText.setText(searchItem.getType());
-        holder.scoreText.setText(String.valueOf(searchItem.getScore()));
-        holder.episodesText.setText(String.valueOf(searchItem.getEpisodes()));
-        if (searchItem.isAiring()) holder.isAiringText.setVisibility(View.VISIBLE);
+        holder.titleText.setText(animeItem.getTitle());
+        holder.typeText.setText(animeItem.getType());
+        holder.episodesText.setText(String.valueOf(animeItem.getEpisodes()));
+        holder.scoreText.setText(String.valueOf(animeItem.getScore()));
         holder.progressBar.setVisibility(View.VISIBLE);
-        Glide.with(context).load(searchItem.getImage_url()).addListener(new RequestListener<Drawable>() {
+
+        Glide.with(context).load(animeItem.getImage_url()).addListener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 holder.progressBar.setVisibility(View.GONE);
@@ -72,23 +67,27 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
             @Override
             public void onClick(View view) {
                 AppCompatActivity activity=(AppCompatActivity)view.getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, FragmentAnimeInfo.newInstance(searchItem.getMal_id())).addToBackStack(null).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, FragmentAnimeInfo.newInstance(animeItem.getMal_id())).addToBackStack(null).commit();
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return animeSearchList.size();
+        return topList.size();
     }
 
-    static class MyViewHolder extends RecyclerView.ViewHolder{
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
 
+    static class ToplistViewHolder extends RecyclerView.ViewHolder{
         TextView titleText,typeText,scoreText,episodesText,isAiringText;
         ImageView imageView;
         ProgressBar progressBar;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public ToplistViewHolder(@NonNull View itemView) {
             super(itemView);
             titleText=itemView.findViewById(R.id.titleText);
             typeText=itemView.findViewById(R.id.typeText);

@@ -80,8 +80,10 @@ public class MainActivity extends AppCompatActivity {
                         fragment=FragmentSearchAnime.newInstance();
                         break;
                     case R.id.anime_top_list:
+                        fragment=FragmentTopAnimeList.newInstance();
                         break;
                     case R.id.anime_by_genre:
+                        fragment=FragmentAnimeGenres.newInstance();
                         break;
                     case R.id.search_user:
                         break;
@@ -108,17 +110,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        //searchAnime("Fairy Tail",1);
-
-        //getAnimeByID(6702);
-
-        //getAnimeCharacters(6702);
-
         //getAnimeByGenre(1,2);
-
-        //getAnimeReviews(6702,1);
-
-        //getTopAnimes(1,"tv");
 
         //getUserProfile("HulkBugra");
 

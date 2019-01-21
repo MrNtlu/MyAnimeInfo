@@ -1,7 +1,11 @@
 package com.mrntlu.myanimeinfo.view.ui;
 
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
@@ -15,6 +19,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.google.android.material.tabs.TabLayout;
 import com.mrntlu.myanimeinfo.R;
 import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeByID;
@@ -33,7 +41,7 @@ public class FragmentAnimeInfo extends Fragment implements OnDataLoaded {
     private ProgressBar animeImageProgress;
     private TextView animeTitle,animeType,scoreText,episodesText,rankText,favsText,statusText,premieredText;
     private AnimeInfoPagerAdapter pagerAdapter;
-
+    private ConstraintLayout loadingScreen;
 
     public FragmentAnimeInfo() {
         // Required empty public constructor
@@ -66,6 +74,7 @@ public class FragmentAnimeInfo extends Fragment implements OnDataLoaded {
         statusText=v.findViewById(R.id.statusText);
         animeImage=v.findViewById(R.id.animeImage);
         premieredText=v.findViewById(R.id.premieredText);
+        loadingScreen=v.findViewById(R.id.loadingScreen);
 
         viewModel= ViewModelProviders.of(getActivity()).get(AnimeViewModel.class);
         viewModel.getAnimeByID(mal_id,this);
@@ -78,8 +87,20 @@ public class FragmentAnimeInfo extends Fragment implements OnDataLoaded {
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
-        Glide.with(getContext()).load(getAnimeByID.getImage_url()).into(animeImage);
-        animeImageProgress.setVisibility(View.GONE);
+        Glide.with(getContext()).load(getAnimeByID.getImage_url()).addListener(new RequestListener<Drawable>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                animeImageProgress.setVisibility(View.GONE);
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                animeImageProgress.setVisibility(View.GONE);
+                return false;
+            }
+        }).into(animeImage);
+        loadingScreen.setVisibility(View.GONE);
         animeTitle.setText(getAnimeByID.getTitle());
         animeType.setText(getAnimeByID.getType());
         scoreText.setText(String.valueOf(getAnimeByID.getScore()));

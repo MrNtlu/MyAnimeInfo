@@ -5,14 +5,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import com.mrntlu.myanimeinfo.R;
 import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeByID;
-import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeCharacters;
 import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeGenre;
-import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeReviewByID;
 import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeSearch;
-import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeTopList;
 import com.mrntlu.myanimeinfo.service.model.jsonbody.GETUserAnimelist;
 import com.mrntlu.myanimeinfo.service.model.jsonbody.GETUserFavs;
 import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.AnimeGenreBody;
@@ -25,11 +21,11 @@ import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.UserProfileResponse
 import com.mrntlu.myanimeinfo.service.repository.AnimeAPI;
 import com.mrntlu.myanimeinfo.view.OnCharactersLoaded;
 import com.mrntlu.myanimeinfo.view.OnDataLoaded;
+import com.mrntlu.myanimeinfo.view.OnGenreListLoaded;
 import com.mrntlu.myanimeinfo.view.OnReviewsLoaded;
+import com.mrntlu.myanimeinfo.view.OnToplistLoaded;
 import com.mrntlu.myanimeinfo.view.adapter.AnimeSearchAdapter;
-
 import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import retrofit2.Call;
@@ -125,32 +121,23 @@ public class AnimeViewModel extends AndroidViewModel {
         });
     }
 
-    public void getTopAnimes(int page,String subtype){
+    public void getTopAnimes(int page, String subtype, final OnToplistLoaded onToplistLoaded){
         Call<AnimeTopListBody> call=animeAPI.getTopAnimes(page, subtype);
 
         call.enqueue(new Callback<AnimeTopListBody>() {
             @Override
             public void onResponse(Call<AnimeTopListBody> call, Response<AnimeTopListBody> response) {
                 if (!response.isSuccessful()){
-                    Log.d(TAG, "onResponse: "+response.code()+" "+response.message()+" "+call.request());
                     return;
                 }
-                Log.d(TAG, "onResponse: "+response.message()+" "+call.request());
 
                 AnimeTopListBody body=response.body();
-
-                for (GETAnimeTopList topList:body.getTop()){
-                    Log.d(TAG, "Title "+topList.getTitle());
-                    Log.d(TAG, "MalID "+topList.getMal_id());
-                    Log.d(TAG, "Score "+topList.getScore());
-                    Log.d(TAG, "Episodes "+topList.getEpisodes());
-                    Log.d(TAG, "ImageURL "+topList.getImage_url());
-                    Log.d(TAG, "Type "+topList.getType());
-                }
+                onToplistLoaded.onToplistLoaded(body.getTop());
             }
 
             @Override
             public void onFailure(Call<AnimeTopListBody> call, Throwable t) {
+                //TODO Toast
                 Log.d(TAG, "onFailure: "+t.getMessage()+" "+
                         call.request().toString());
             }
@@ -164,10 +151,8 @@ public class AnimeViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<AnimeReviewsBody> call, Response<AnimeReviewsBody> response) {
                 if (!response.isSuccessful()){
-                    Log.d(TAG, "onResponse: "+response.code()+" "+response.message());
                     return;
                 }
-                Log.d(TAG, "onResponse: "+response.message()+" "+call.request());
 
                 AnimeReviewsBody body=response.body();
                 onReviewsLoaded.onReviewsLoaded(body.getReviews());
@@ -175,37 +160,30 @@ public class AnimeViewModel extends AndroidViewModel {
 
             @Override
             public void onFailure(Call<AnimeReviewsBody> call, Throwable t) {
+                //TODO Toast
                 Log.d(TAG, "onFailure: "+t.getMessage()+" "+
                         call.request().toString());
             }
         });
     }
 
-    public void getAnimeByGenre(int genreID,int page){
+    public void getAnimeByGenre(int genreID, int page, final OnGenreListLoaded onGenreListLoaded){
         Call<AnimeGenreBody> call=animeAPI.getGenreByID(genreID,page);
 
         call.enqueue(new Callback<AnimeGenreBody>() {
             @Override
             public void onResponse(Call<AnimeGenreBody> call, Response<AnimeGenreBody> response) {
                 if (!response.isSuccessful()){
-                    Log.d(TAG, "onResponse: "+response.code()+" "+response.message());
                     return;
                 }
-                Log.d(TAG, "onResponse: "+response.message()+" "+call.request());
 
                 AnimeGenreBody body=response.body();
-
-                for (GETAnimeGenre genreBody:body.getAnime()){
-                    Log.d(TAG, "Title: "+genreBody.getTitle());
-                    Log.d(TAG, "Image URL: "+genreBody.getImage_url());
-                    Log.d(TAG, "Episodes: "+genreBody.getEpisodes());
-                    Log.d(TAG, "Score: "+genreBody.getScore());
-                    Log.d(TAG, "Type: "+genreBody.getType());
-                }
+                onGenreListLoaded.onGenreListLoaded(body.getAnime());
             }
 
             @Override
             public void onFailure(Call<AnimeGenreBody> call, Throwable t) {
+                //TODO Toast
                 Log.d(TAG, "onFailure: "+t.getMessage()+" "+
                         call.request().toString());
             }
@@ -226,6 +204,7 @@ public class AnimeViewModel extends AndroidViewModel {
 
             @Override
             public void onFailure(Call<GETAnimeByID> call, Throwable t) {
+                //TODO Toast
                 Log.d(TAG, "onFailure: "+t.getMessage()+" "+
                         call.request().toString());
             }
@@ -248,6 +227,7 @@ public class AnimeViewModel extends AndroidViewModel {
 
             @Override
             public void onFailure(Call<CharacterResponseBody> call, Throwable t) {
+                //TODO Toast
                 Log.d(TAG, "onFailure: "+t.getMessage()+" "+
                         call.request().toString());
             }
@@ -276,9 +256,6 @@ public class AnimeViewModel extends AndroidViewModel {
             public void onFailure(Call<AnimeResponseBody> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(getApplication().getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                //TODO Toast
-                Log.d(TAG, "onFailure: "+t.getMessage()+" "+
-                        call.request().toString());
             }
         });
     }

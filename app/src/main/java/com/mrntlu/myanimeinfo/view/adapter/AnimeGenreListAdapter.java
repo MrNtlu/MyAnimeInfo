@@ -8,53 +8,50 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.mrntlu.myanimeinfo.R;
-import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeSearch;
+import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeGenre;
 import com.mrntlu.myanimeinfo.view.ui.FragmentAnimeInfo;
+
 import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.MyViewHolder> {
+public class AnimeGenreListAdapter extends RecyclerView.Adapter<AnimeGenreListAdapter.GenreListViewHolder> {
 
     private Context context;
-    private List<GETAnimeSearch> animeSearchList;
+    private List<GETAnimeGenre> animeGenreList;
 
-    public AnimeSearchAdapter(Context context, List<GETAnimeSearch> animeSearchList) {
+    public AnimeGenreListAdapter(Context context, List<GETAnimeGenre> animeGenreList) {
         this.context = context;
-        this.animeSearchList = animeSearchList;
+        this.animeGenreList = animeGenreList;
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public GenreListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v= LayoutInflater.from(context).inflate(R.layout.cell_anime_showcase,parent,false);
-        return new MyViewHolder(v);
+        return new GenreListViewHolder(v);
     }
 
     @Override
-    public int getItemViewType(int position) {
-        return position;
-    }
+    public void onBindViewHolder(@NonNull final GenreListViewHolder holder, int position) {
+        final GETAnimeGenre genreItem=animeGenreList.get(position);
 
-    @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
-        final GETAnimeSearch searchItem=animeSearchList.get(position);
+        holder.titleText.setText(genreItem.getTitle());
+        holder.typeText.setText(genreItem.getType());
+        holder.scoreText.setText(String.valueOf(genreItem.getScore()));
+        holder.episodesText.setText(String.valueOf(genreItem.getEpisodes()));
 
-        holder.titleText.setText(searchItem.getTitle());
-        holder.typeText.setText(searchItem.getType());
-        holder.scoreText.setText(String.valueOf(searchItem.getScore()));
-        holder.episodesText.setText(String.valueOf(searchItem.getEpisodes()));
-        if (searchItem.isAiring()) holder.isAiringText.setVisibility(View.VISIBLE);
         holder.progressBar.setVisibility(View.VISIBLE);
-        Glide.with(context).load(searchItem.getImage_url()).addListener(new RequestListener<Drawable>() {
+        Glide.with(context).load(genreItem.getImage_url()).addListener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 holder.progressBar.setVisibility(View.GONE);
@@ -72,23 +69,27 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
             @Override
             public void onClick(View view) {
                 AppCompatActivity activity=(AppCompatActivity)view.getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, FragmentAnimeInfo.newInstance(searchItem.getMal_id())).addToBackStack(null).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, FragmentAnimeInfo.newInstance(genreItem.getMal_id())).addToBackStack(null).commit();
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return animeSearchList.size();
+        return animeGenreList.size();
     }
 
-    static class MyViewHolder extends RecyclerView.ViewHolder{
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
 
+    static class GenreListViewHolder extends RecyclerView.ViewHolder{
         TextView titleText,typeText,scoreText,episodesText,isAiringText;
         ImageView imageView;
         ProgressBar progressBar;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public GenreListViewHolder(@NonNull View itemView) {
             super(itemView);
             titleText=itemView.findViewById(R.id.titleText);
             typeText=itemView.findViewById(R.id.typeText);

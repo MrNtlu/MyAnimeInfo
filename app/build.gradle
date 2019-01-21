@@ -37,4 +37,6 @@ dependencies {
     testİmplementation 'junit:junit:4.12'
     androidTestİmplementation 'com.android.support.test:runner:1.0.2'
     androidTestİmplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
 }
