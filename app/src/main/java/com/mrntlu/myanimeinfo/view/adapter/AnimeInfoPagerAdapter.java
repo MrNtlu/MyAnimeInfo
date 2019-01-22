@@ -1,14 +1,11 @@
 package com.mrntlu.myanimeinfo.view.adapter;
 
-import android.util.Log;
-
 import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeByID;
 import com.mrntlu.myanimeinfo.view.ui.FragmentSearchAnime;
 import com.mrntlu.myanimeinfo.view.ui.InnerFragmentAnimeInfo;
 import com.mrntlu.myanimeinfo.view.ui.InnerFragmentAnimeReviews;
 import com.mrntlu.myanimeinfo.view.ui.InnerFragmentCharacters;
 import com.mrntlu.myanimeinfo.view.ui.InnerFragmentRelatedAnimes;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -56,13 +53,13 @@ public class AnimeInfoPagerAdapter extends FragmentStatePagerAdapter {
                 title="Info";
                 break;
             case 1:
-                title="Related Animes";
+                title="Related ANIMES";
                 break;
             case 2:
                 title="Characters";
                 break;
             case 3:
-                title="Reviews";
+                title="REVIEWS";
                 break;
             default:
                 return "Info";

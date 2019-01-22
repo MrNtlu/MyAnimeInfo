@@ -25,4 +25,10 @@
         android:icon="@drawable/ic_launcher_foreground"
         android:id="@+id/search_user"/>
 
+    <item
+        android:title="Anime Schedule"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:id="@+id/anime_schedule"/>
+
 </menu>

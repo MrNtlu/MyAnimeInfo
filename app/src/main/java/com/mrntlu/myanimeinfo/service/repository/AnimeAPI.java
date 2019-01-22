@@ -37,6 +37,6 @@ public interface AnimeAPI {
     @GET("user/{username}/profile")
     Call<UserProfileResponseBody> getUserProfile(@Path("username") String username);
 
-    @GET("user/{username}/animelist")
-    Call<UserAnimelistResponseBody> getUserAnimeList(@Path("username") String username);
+    @GET("user/{username}/animelist/{argument}")
+    Call<UserAnimelistResponseBody> getUserAnimeList(@Path("username") String username,@Path("argument") String argument);
 }

@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout=findViewById(R.id.drawer_layout);
 
         setSupportActionBar(toolbar);
-
         FragmentManager fragmentManager=getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.frame_layout,FragmentSearchAnime.newInstance()).commit();
 
@@ -87,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.search_user:
                         fragment=FragmentSearchUser.newInstance();
+                        break;
+                    case R.id.anime_schedule:
                         break;
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -110,11 +111,5 @@ public class MainActivity extends AppCompatActivity {
         });
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-
-        //getAnimeByGenre(1,2);
-
-        //getUserProfile("HulkBugra");
-
-        //getUserAnimelist("mrntlu");
     }
 }

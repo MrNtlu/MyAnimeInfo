@@ -130,25 +130,6 @@ public class InnerFragmentRelatedAnimes extends Fragment {
             }
         });
 
-        /*
-                if (animeByIDBody.getRelated().getAdaptation()!=null) {
-                    for (GETAnimeByID.RelatedAnimes.Adaptations adaptations : animeByIDBody.getRelated().getAdaptation()) {
-                        Log.d(TAG, "Adaptations: " + adaptations.getName() + " " + adaptations.getMal_id());
-                    }
-                }
-
-                if (animeByIDBody.getRelated().getOther()!=null) {
-                    for (GETAnimeByID.RelatedAnimes.AnimeRelations others : animeByIDBody.getRelated().getOther()) {
-                        Log.d(TAG, "AnimeRelations: " + others.getName() + " " + others.getMal_id());
-                    }
-                }
-
-                if (animeByIDBody.getRelated().getSequel()!=null) {
-                    for (GETAnimeByID.RelatedAnimes.Sequels sequels : animeByIDBody.getRelated().getSequel()) {
-                        Log.d(TAG, "Sequels: " + sequels.getName() + " " + sequels.getMal_id());
-                    }
-                }*/
-
         return v;
     }
 }

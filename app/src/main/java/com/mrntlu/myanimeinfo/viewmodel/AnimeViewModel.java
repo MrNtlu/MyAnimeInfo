@@ -19,6 +19,7 @@ import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.CharacterResponseBo
 import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.UserAnimelistResponseBody;
 import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.UserProfileResponseBody;
 import com.mrntlu.myanimeinfo.service.repository.AnimeAPI;
+import com.mrntlu.myanimeinfo.view.OnAnimeListLoaded;
 import com.mrntlu.myanimeinfo.view.OnCharactersLoaded;
 import com.mrntlu.myanimeinfo.view.OnDataLoaded;
 import com.mrntlu.myanimeinfo.view.OnGenreListLoaded;
@@ -49,35 +50,20 @@ public class AnimeViewModel extends AndroidViewModel {
         animeAPI=retrofit.create(AnimeAPI.class);
     }
 
-    public void getUserAnimelist(String username){
-        Call<UserAnimelistResponseBody> call=animeAPI.getUserAnimeList(username);
+    public void getUserAnimelist(String username, String argument,final OnAnimeListLoaded onAnimeListLoaded){
+        Call<UserAnimelistResponseBody> call=animeAPI.getUserAnimeList(username,argument);
 
         call.enqueue(new Callback<UserAnimelistResponseBody>() {
             @Override
             public void onResponse(Call<UserAnimelistResponseBody> call, Response<UserAnimelistResponseBody> response) {
                 if (!response.isSuccessful()){
+                    //TODO error check
                     Log.d(TAG, "onResponse: "+response.code()+" "+response.message()+" "+call.request());
                     return;
                 }
-                Log.d(TAG, "onResponse: "+response.message()+" "+call.request());
 
                 UserAnimelistResponseBody body=response.body();
-
-                for (GETUserAnimelist animelist:body.getAnime()){
-                    Log.d(TAG, "Anime Title: "+animelist.getTitle());
-                    Log.d(TAG, "Anime Mal_ID: "+animelist.getMal_id());
-                    Log.d(TAG, "Anime Score: "+animelist.getScore());
-                    Log.d(TAG, "Anime Watched: "+animelist.getWatched_episodes());
-                    Log.d(TAG, "Anime Total: "+animelist.getTotal_episodes());
-                    int status=animelist.getWatching_status();
-                    String mStatus="";
-                    if (status==1) mStatus="Watching";
-                    else if (status==2)mStatus="Completed";
-                    else if (status==3)mStatus="On-Hold";
-                    else if (status==4)mStatus="Dropped";
-                    else if (status==6)mStatus="Plan to Watch";
-                    Log.d(TAG, "Watching Status: "+mStatus);
-                }
+                onAnimeListLoaded.onAnimelistLoaded(body.getAnime());
             }
 
             @Override
