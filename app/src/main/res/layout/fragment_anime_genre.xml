@@ -7,9 +7,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.ui.FragmentAnimeGenres">
     <ScrollView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginTop="6dp">
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp">
         <GridLayout
             android:id="@+id/gridLayout"
             android:layout_width="match_parent"
@@ -29,7 +30,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Action"
@@ -46,7 +47,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Adventure"
@@ -63,7 +64,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Cars"
@@ -80,7 +81,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Comedy"
@@ -97,7 +98,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Dementia"
@@ -114,7 +115,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Demons"
@@ -131,7 +132,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Mystery"
@@ -148,7 +149,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Drama"
@@ -165,7 +166,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Ecchi"
@@ -182,7 +183,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Fantasy"
@@ -199,7 +200,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Game"
@@ -216,7 +217,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Hentai"
@@ -233,7 +234,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Historical"
@@ -250,7 +251,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Horror"
@@ -267,7 +268,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Kids"
@@ -284,7 +285,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Magic"
@@ -301,7 +302,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Martial Arts"
@@ -318,7 +319,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Mecha"
@@ -335,7 +336,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Music"
@@ -352,7 +353,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Parody"
@@ -369,7 +370,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Samurai"
@@ -386,7 +387,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Romance"
@@ -403,7 +404,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="School"
@@ -420,7 +421,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Sci-Fi"
@@ -437,7 +438,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Shoujo"
@@ -454,7 +455,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Shoujo-Ai"
@@ -471,7 +472,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Shounen"
@@ -488,7 +489,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Shounen-Ai"
@@ -505,7 +506,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Space"
@@ -522,7 +523,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Sports"
@@ -539,7 +540,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Super Power"
@@ -556,7 +557,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Vampire"
@@ -573,7 +574,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Yaoi"
@@ -590,7 +591,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Yuri"
@@ -607,7 +608,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Harem"
@@ -624,7 +625,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Slice of Life"
@@ -641,7 +642,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Supernatural"
@@ -658,7 +659,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Military"
@@ -675,7 +676,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Police"
@@ -692,7 +693,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Psychologic"
@@ -709,7 +710,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Thriller"
@@ -726,7 +727,7 @@
                 android:layout_marginStart="4dp">
                 <TextView
                     android:textSize="12sp"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:textAlignment="center"
                     android:layout_height="wrap_content"
                     android:text="Seinen"

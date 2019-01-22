@@ -24,6 +24,7 @@ import com.mrntlu.myanimeinfo.view.OnDataLoaded;
 import com.mrntlu.myanimeinfo.view.OnGenreListLoaded;
 import com.mrntlu.myanimeinfo.view.OnReviewsLoaded;
 import com.mrntlu.myanimeinfo.view.OnToplistLoaded;
+import com.mrntlu.myanimeinfo.view.OnUserInfoLoaded;
 import com.mrntlu.myanimeinfo.view.adapter.AnimeSearchAdapter;
 import java.util.List;
 import androidx.annotation.NonNull;
@@ -87,30 +88,19 @@ public class AnimeViewModel extends AndroidViewModel {
         });
     }
 
-    public void getUserProfile(String username){
+    public void getUserProfile(String username, final OnUserInfoLoaded onUserInfoLoaded){
         Call<UserProfileResponseBody> call=animeAPI.getUserProfile(username);
 
         call.enqueue(new Callback<UserProfileResponseBody>() {
             @Override
             public void onResponse(Call<UserProfileResponseBody> call, Response<UserProfileResponseBody> response) {
                 if (!response.isSuccessful()){
-                    Log.d(TAG, "onResponse: "+response.code()+" "+response.message()+" "+call.request());
+                    //TODO SendBack
+                    onUserInfoLoaded.onUserNotFound();
+                    Log.d(TAG, "onResponseNotSuccessful: "+response.code()+" "+response.message()+" "+call.request());
                     return;
                 }
-                Log.d(TAG, "onResponse: "+response.message()+" "+call.request());
-
-                UserProfileResponseBody body=response.body();
-
-                Log.d(TAG, "Username: "+body.getUsername());
-                Log.d(TAG, "Image URL: "+body.getImage_url());
-                Log.d(TAG, "Anime Stats: "+body.getAnime_stats().getCompleted()+" "+body.getAnime_stats().getDays_watched()+" "+body.getAnime_stats().getMean_score());
-
-                for (GETUserFavs animes:body.getFavorites().getAnime()){
-                    Log.d(TAG, "Animes: "+animes.getName()+" "+animes.getMal_id()+" "+animes.getImage_url());
-                }
-                for (GETUserFavs characters:body.getFavorites().getCharacters()){
-                    Log.d(TAG, "Characters: "+characters.getName()+" "+characters.getMal_id()+" "+characters.getImage_url());
-                }
+                onUserInfoLoaded.onUserInfoLoaded(response.body());
             }
 
             @Override

@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment=FragmentAnimeGenres.newInstance();
                         break;
                     case R.id.search_user:
+                        fragment=FragmentSearchUser.newInstance();
                         break;
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
