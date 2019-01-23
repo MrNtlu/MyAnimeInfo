@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 public class AnimeInfoPagerAdapter extends FragmentStatePagerAdapter {
 
-    GETAnimeByID animeByID;
+    private GETAnimeByID animeByID;
 
     public AnimeInfoPagerAdapter(@NonNull FragmentManager fm, GETAnimeByID animeByID) {
         super(fm);

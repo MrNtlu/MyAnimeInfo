@@ -71,7 +71,7 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppCompatActivity activity=(AppCompatActivity)view.getContext();
+                AppCompatActivity activity=(AppCompatActivity)context;
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, FragmentAnimeInfo.newInstance(searchItem.getMal_id())).addToBackStack(null).commit();
             }
         });
@@ -88,7 +88,7 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
         ImageView imageView;
         ProgressBar progressBar;
 
-        public MyViewHolder(@NonNull View itemView) {
+        MyViewHolder(@NonNull View itemView) {
             super(itemView);
             titleText=itemView.findViewById(R.id.titleText);
             typeText=itemView.findViewById(R.id.typeText);

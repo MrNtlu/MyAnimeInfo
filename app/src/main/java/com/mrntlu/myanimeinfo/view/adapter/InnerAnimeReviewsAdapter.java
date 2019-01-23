@@ -69,12 +69,12 @@ public class InnerAnimeReviewsAdapter extends RecyclerView.Adapter<InnerAnimeRev
         return animeReviews.size();
     }
 
-    public static class ReviewsViewHolder extends RecyclerView.ViewHolder{
+    static class ReviewsViewHolder extends RecyclerView.ViewHolder{
 
         TextView storyScore,soundScore,enjoymentScore,characterScore,animationScore,overallScore,reviewText,usernameText;
         ImageView userImage,expandImage;
 
-        public ReviewsViewHolder(View itemView) {
+        ReviewsViewHolder(View itemView) {
             super(itemView);
             storyScore=itemView.findViewById(R.id.storyScore);
             usernameText=itemView.findViewById(R.id.usernameText);

@@ -14,16 +14,16 @@ import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeGenre;
 import com.mrntlu.myanimeinfo.view.OnGenreListLoaded;
 import com.mrntlu.myanimeinfo.view.adapter.AnimeGenreListAdapter;
 import com.mrntlu.myanimeinfo.viewmodel.AnimeViewModel;
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 public class FragmentAnimeGenreList extends Fragment implements OnGenreListLoaded {
 
-    private View v;
-    private RecyclerView animeGenreRV;
-    private ProgressBar genreProgress;
-    private AnimeViewModel viewModel;
     private int genreID;
-    private AnimeGenreListAdapter adapter;
+
+    private WeakReference<RecyclerView> recyclerViewWeakReference;
+    private WeakReference<ProgressBar> progressBarWeakReference;
+
 
     public FragmentAnimeGenreList() {
         // Required empty public constructor
@@ -43,11 +43,14 @@ public class FragmentAnimeGenreList extends Fragment implements OnGenreListLoade
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        v=inflater.inflate(R.layout.fragment_anime_genre_list, container, false);
-        animeGenreRV=v.findViewById(R.id.animeGenreRV);
-        genreProgress=v.findViewById(R.id.genreProgress);
+        View v = inflater.inflate(R.layout.fragment_anime_genre_list, container, false);
+        final RecyclerView animeGenreRV= v.findViewById(R.id.animeGenreRV);
+        final ProgressBar genreProgress= v.findViewById(R.id.genreProgress);
+        recyclerViewWeakReference=new WeakReference<>(animeGenreRV);
+        progressBarWeakReference=new WeakReference<>(genreProgress);
+
         genreProgress.setVisibility(View.VISIBLE);
-        viewModel= ViewModelProviders.of(getActivity()).get(AnimeViewModel.class);
+        AnimeViewModel viewModel = ViewModelProviders.of(getActivity()).get(AnimeViewModel.class);
         viewModel.getAnimeByGenre(genreID,1,this);
 
         return v;
@@ -55,10 +58,16 @@ public class FragmentAnimeGenreList extends Fragment implements OnGenreListLoade
 
     @Override
     public void onGenreListLoaded(List<GETAnimeGenre> animeGenres) {
-        adapter=new AnimeGenreListAdapter(getContext(),animeGenres);
-        GridLayoutManager gridLayoutManager=new GridLayoutManager(getActivity(),2);
-        animeGenreRV.setLayoutManager(gridLayoutManager);
-        animeGenreRV.setAdapter(adapter);
-        genreProgress.setVisibility(View.GONE);
+        if (FragmentAnimeGenreList.this.isVisible()) {
+            RecyclerView weakRV=recyclerViewWeakReference.get();
+            ProgressBar weakProgress=progressBarWeakReference.get();
+            if (weakProgress!=null && weakRV!=null) {
+                AnimeGenreListAdapter adapter = new AnimeGenreListAdapter(getContext(), animeGenres);
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+                weakRV.setLayoutManager(gridLayoutManager);
+                weakRV.setAdapter(adapter);
+                weakProgress.setVisibility(View.GONE);
+            }
+        }
     }
 }

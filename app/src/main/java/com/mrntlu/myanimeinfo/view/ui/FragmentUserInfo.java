@@ -2,6 +2,7 @@ package com.mrntlu.myanimeinfo.view.ui;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -29,19 +30,18 @@ import com.mrntlu.myanimeinfo.view.OnUserInfoLoaded;
 import com.mrntlu.myanimeinfo.view.adapter.UserInfoPagerAdapter;
 import com.mrntlu.myanimeinfo.viewmodel.AnimeViewModel;
 
+import java.lang.ref.WeakReference;
+
 public class FragmentUserInfo extends Fragment implements OnUserInfoLoaded {
 
-    private View v;
     private String username;
-    private AnimeViewModel viewModel;
-    private TextView usernameText;
-    private ProgressBar userImageProgress;
-    private Button animelistButton;
-    private ImageView userImage;
-    private ConstraintLayout loadingScreen;
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
-    private UserInfoPagerAdapter pagerAdapter;
+
+    private WeakReference<ViewPager> viewPagerWeakReference;
+    private WeakReference<TabLayout> tabLayoutWeakReference;
+    private WeakReference<ConstraintLayout> constraintLayoutWeakReference;
+    private WeakReference<ProgressBar> progressBarWeakReference;
+    private WeakReference<ImageView> imageViewWeakReference;
+    private WeakReference<TextView> weakAnimeTitle;
 
     public FragmentUserInfo() {
         // Required empty public constructor
@@ -59,61 +59,83 @@ public class FragmentUserInfo extends Fragment implements OnUserInfoLoaded {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        v=inflater.inflate(R.layout.fragment_user_info, container, false);
-        usernameText=v.findViewById(R.id.usernameText);
+        View v = inflater.inflate(R.layout.fragment_user_info, container, false);
+        TextView usernameText= v.findViewById(R.id.usernameText);
+        ProgressBar userImageProgress= v.findViewById(R.id.userImageProgress);
+        Button animelistButton = v.findViewById(R.id.animelistButton);
+        ImageView userImage= v.findViewById(R.id.userImage);
+        ConstraintLayout loadingScreen= v.findViewById(R.id.loadingScreen);
+        ViewPager viewPager= v.findViewById(R.id.userViewPager);
+        TabLayout tabLayout= v.findViewById(R.id.userTabLayout);
 
-        userImageProgress=v.findViewById(R.id.userImageProgress);
-        animelistButton=v.findViewById(R.id.animelistButton);
-        userImage=v.findViewById(R.id.userImage);
-        loadingScreen=v.findViewById(R.id.loadingScreen);
-        viewPager=v.findViewById(R.id.userViewPager);
-        tabLayout=v.findViewById(R.id.userTabLayout);
+        weakAnimeTitle=new WeakReference<>(usernameText);
+        viewPagerWeakReference=new WeakReference<>(viewPager);
+        tabLayoutWeakReference=new WeakReference<>(tabLayout);
+        constraintLayoutWeakReference=new WeakReference<>(loadingScreen);
+        progressBarWeakReference=new WeakReference<>(userImageProgress);
+        imageViewWeakReference=new WeakReference<>(userImage);
 
         animelistButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppCompatActivity activity=(AppCompatActivity)view.getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, FragmentUserAnimeList.newInstance(username)).addToBackStack(null).commit();
+                AppCompatActivity activity=(AppCompatActivity)getContext();
+                if (activity != null) {
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, FragmentUserAnimeList.newInstance(username)).addToBackStack(null).commit();
+                }
             }
         });
 
-        viewModel= ViewModelProviders.of(getActivity()).get(AnimeViewModel.class);
+        AnimeViewModel viewModel = ViewModelProviders.of(getActivity()).get(AnimeViewModel.class);
         viewModel.getUserProfile(username,this);
         return v;
     }
 
+
     @Override
     public void onUserInfoLoaded(UserProfileResponseBody profileBody) {
-        pagerAdapter=new UserInfoPagerAdapter(getChildFragmentManager(),profileBody);
-        viewPager.setAdapter(pagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
+        if (FragmentUserInfo.this.isVisible()) {
+            ViewPager weakViewPager = viewPagerWeakReference.get();
+            TabLayout weakTabLayout = tabLayoutWeakReference.get();
+            ImageView weakImageView = imageViewWeakReference.get();
+            final ConstraintLayout weakConstraint = constraintLayoutWeakReference.get();
+            final ProgressBar weakProgress=progressBarWeakReference.get();
 
-        usernameText.setText(profileBody.getUsername());
-        Glide.with(v).load(profileBody.getImage_url()).addListener(new RequestListener<Drawable>() {
-            @Override
-            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                //TODO NoPicture
-                Log.d("testJSON", "onLoadFailed: "+e.getMessage());
-                userImageProgress.setVisibility(View.GONE);
-                loadingScreen.setVisibility(View.GONE);
-                return false;
-            }
+            TextView animeTitle=weakAnimeTitle.get();
 
-            @Override
-            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                userImageProgress.setVisibility(View.GONE);
-                loadingScreen.setVisibility(View.GONE);
-                return false;
+            if (weakConstraint != null && weakTabLayout != null && weakViewPager != null && weakProgress!=null && weakImageView!=null) {
+
+                UserInfoPagerAdapter pagerAdapter = new UserInfoPagerAdapter(getChildFragmentManager(), profileBody);
+                weakViewPager.setAdapter(pagerAdapter);
+                weakTabLayout.setupWithViewPager(weakViewPager);
+
+                if (weakAnimeTitle!=null) animeTitle.setText(profileBody.getUsername());
+
+                Glide.with(getContext()).load(profileBody.getImage_url()).addListener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        //TODO NoPicture
+                        weakProgress.setVisibility(View.GONE);
+                        weakConstraint.setVisibility(View.GONE);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        weakProgress.setVisibility(View.GONE);
+                        weakConstraint.setVisibility(View.GONE);
+                        return false;
+                    }
+                }).into(weakImageView);
             }
-        }).into(userImage);
+        }
     }
 
     @Override
     public void onUserNotFound() {
         //TODO Onusernotfound
-        Toast.makeText(getContext(), "User Not Found", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext().getApplicationContext(), "User Not Found", Toast.LENGTH_SHORT).show();
         getActivity().getSupportFragmentManager().popBackStackImmediate();
     }
 }

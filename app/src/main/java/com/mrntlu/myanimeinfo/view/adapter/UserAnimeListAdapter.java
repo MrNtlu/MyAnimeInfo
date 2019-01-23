@@ -16,7 +16,6 @@ import com.bumptech.glide.request.target.Target;
 import com.mrntlu.myanimeinfo.R;
 import com.mrntlu.myanimeinfo.service.model.jsonbody.GETUserAnimelist;
 import com.mrntlu.myanimeinfo.view.ui.FragmentAnimeInfo;
-
 import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class UserAnimeListAdapter extends RecyclerView.Adapter<UserAnimeListAdapter.AnimeListViewHolder> {
+
     private Context context;
     private List<GETUserAnimelist> userAnimelist;
 
@@ -72,7 +72,7 @@ public class UserAnimeListAdapter extends RecyclerView.Adapter<UserAnimeListAdap
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppCompatActivity activity=(AppCompatActivity)view.getContext();
+                AppCompatActivity activity=(AppCompatActivity)context;
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, FragmentAnimeInfo.newInstance(userAnime.getMal_id())).addToBackStack(null).commit();
             }
         });

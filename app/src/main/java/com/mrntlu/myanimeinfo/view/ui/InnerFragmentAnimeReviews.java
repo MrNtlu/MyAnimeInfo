@@ -1,7 +1,8 @@
 package com.mrntlu.myanimeinfo.view.ui;
 
-
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,16 +17,15 @@ import com.mrntlu.myanimeinfo.view.OnReviewsLoaded;
 import com.mrntlu.myanimeinfo.view.adapter.InnerAnimeReviewsAdapter;
 import com.mrntlu.myanimeinfo.viewmodel.AnimeViewModel;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 public class InnerFragmentAnimeReviews extends Fragment implements OnReviewsLoaded {
 
-    private View v;
-    private RecyclerView animeReviewsRV;
-    private AnimeViewModel viewModel;
-    private ProgressBar reviewProgress;
     private int mal_id;
-    private InnerAnimeReviewsAdapter adapter;
+
+    private WeakReference<ProgressBar> progressBarWeakReference;
+    private WeakReference<RecyclerView> recyclerViewWeakReference;
 
     public InnerFragmentAnimeReviews() {
         // Required empty public constructor
@@ -44,13 +44,17 @@ public class InnerFragmentAnimeReviews extends Fragment implements OnReviewsLoad
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        v=inflater.inflate(R.layout.fragment_inner_anime_reviews, container, false);
-        animeReviewsRV=v.findViewById(R.id.animeReviewsRV);
-        reviewProgress=v.findViewById(R.id.reviewProgress);
+        View v = inflater.inflate(R.layout.fragment_inner_anime_reviews, container, false);
+        RecyclerView animeReviewsRV= v.findViewById(R.id.animeReviewsRV);
+        ProgressBar reviewProgress= v.findViewById(R.id.reviewProgress);
         reviewProgress.setVisibility(View.VISIBLE);
-        viewModel=ViewModelProviders.of(getActivity()).get(AnimeViewModel.class);
+
+        progressBarWeakReference=new WeakReference<>(reviewProgress);
+        recyclerViewWeakReference=new WeakReference<>(animeReviewsRV);
+
+        AnimeViewModel viewModel = ViewModelProviders.of(getActivity()).get(AnimeViewModel.class);
         viewModel.getAnimeReviews(mal_id,1,this);
 
         return v;
@@ -58,10 +62,17 @@ public class InnerFragmentAnimeReviews extends Fragment implements OnReviewsLoad
 
     @Override
     public void onReviewsLoaded(List<GETAnimeReviewByID> getAnimeReviewByID) {
-        adapter=new InnerAnimeReviewsAdapter(getAnimeReviewByID,getContext());
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        animeReviewsRV.setLayoutManager(linearLayoutManager);
-        animeReviewsRV.setAdapter(adapter);
-        reviewProgress.setVisibility(View.GONE);
+        if (InnerFragmentAnimeReviews.this.isVisible()) {
+            RecyclerView weakRV = recyclerViewWeakReference.get();
+            ProgressBar weakProgress = progressBarWeakReference.get();
+
+            if (weakProgress != null && weakRV != null) {
+                InnerAnimeReviewsAdapter adapter = new InnerAnimeReviewsAdapter(getAnimeReviewByID, getContext());
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                weakRV.setLayoutManager(linearLayoutManager);
+                weakRV.setAdapter(adapter);
+                weakProgress.setVisibility(View.GONE);
+            }
+        }
     }
 }

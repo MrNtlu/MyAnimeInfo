@@ -52,13 +52,13 @@ public class InnerAnimeCharactersAdapter extends RecyclerView.Adapter<InnerAnime
         return getAnimeCharacters.size();
     }
 
-    public static class CharacterViewHolder extends RecyclerView.ViewHolder{
+    static class CharacterViewHolder extends RecyclerView.ViewHolder{
 
         TextView characterNameText,characterRoleText;
         ImageView characterImage;
         //ProgressBar progressBar;
 
-        public CharacterViewHolder(@NonNull View itemView) {
+        CharacterViewHolder(@NonNull View itemView) {
             super(itemView);
             characterNameText=itemView.findViewById(R.id.characterNameText);
             characterRoleText=itemView.findViewById(R.id.characterRoleText);

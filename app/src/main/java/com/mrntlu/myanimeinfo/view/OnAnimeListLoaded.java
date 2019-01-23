@@ -7,4 +7,5 @@ public interface OnAnimeListLoaded {
 
     void onAnimelistLoaded(List<GETUserAnimelist> userAnimelist);
 
+    void onFailedToLoad();
 }

@@ -18,12 +18,8 @@ import com.mrntlu.myanimeinfo.view.adapter.UserFavsAdapter;
 
 public class InnerFragmentUserFavs extends Fragment {
 
-    private View v;
     private int status;
     private UserProfileResponseBody.Favorites favorites;
-    private RecyclerView favsRV;
-    private UserFavsAdapter adapter;
-    private TextView nothingHereText;
 
     public InnerFragmentUserFavs() {
         // Required empty public constructor
@@ -44,11 +40,11 @@ public class InnerFragmentUserFavs extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        v=inflater.inflate(R.layout.fragment_inner_user_favs, container, false);
-        favsRV=v.findViewById(R.id.favsRV);
-        nothingHereText=v.findViewById(R.id.nothingHereText);
+        View v = inflater.inflate(R.layout.fragment_inner_user_favs, container, false);
+        RecyclerView favsRV = v.findViewById(R.id.favsRV);
+        TextView nothingHereText = v.findViewById(R.id.nothingHereText);
 
-        adapter=new UserFavsAdapter(status,getContext(),favorites);
+        UserFavsAdapter adapter = new UserFavsAdapter(status, getContext(), favorites);
         GridLayoutManager gridLayoutManager=new GridLayoutManager(getActivity(),3);
         favsRV.setLayoutManager(gridLayoutManager);
         favsRV.setAdapter(adapter);

@@ -1,7 +1,6 @@
 package com.mrntlu.myanimeinfo.view.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +8,6 @@ import android.widget.TextView;
 import com.mrntlu.myanimeinfo.R;
 import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeByID;
 import com.mrntlu.myanimeinfo.view.ui.FragmentAnimeInfo;
-import com.mrntlu.myanimeinfo.view.ui.InnerFragmentRelatedAnimes;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,7 +50,7 @@ public class InnerAnimeRelationsAdapter extends RecyclerView.Adapter<InnerAnimeR
                 else if (status==1)mal_id=relatedAnimes.getPrequel().get(lastPosition).getMal_id();
                 else mal_id=relatedAnimes.getSequel().get(lastPosition).getMal_id();
 
-                AppCompatActivity activity=(AppCompatActivity)view.getContext();
+                AppCompatActivity activity=(AppCompatActivity)context;
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, FragmentAnimeInfo.newInstance(mal_id)).addToBackStack(null).commit();
 
             }
@@ -78,11 +75,11 @@ public class InnerAnimeRelationsAdapter extends RecyclerView.Adapter<InnerAnimeR
         return position;
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    static class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView animeTitle;
 
-        public MyViewHolder(View itemView) {
+        MyViewHolder(View itemView) {
             super(itemView);
             animeTitle=itemView.findViewById(R.id.titleText);
         }

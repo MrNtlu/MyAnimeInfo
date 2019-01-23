@@ -4,6 +4,7 @@ import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeByID;
 import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.AnimeResponseBody;
 import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.AnimeGenreBody;
 import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.AnimeReviewsBody;
+import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.AnimeScheduleBody;
 import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.AnimeTopListBody;
 import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.CharacterResponseBody;
 import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.UserAnimelistResponseBody;
@@ -39,4 +40,7 @@ public interface AnimeAPI {
 
     @GET("user/{username}/animelist/{argument}")
     Call<UserAnimelistResponseBody> getUserAnimeList(@Path("username") String username,@Path("argument") String argument);
+
+    @GET("schedule")
+    Call<AnimeScheduleBody> getAnimeSchedule();
 }

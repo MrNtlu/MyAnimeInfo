@@ -66,7 +66,7 @@ public class AnimeToplistAdapter extends RecyclerView.Adapter<AnimeToplistAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppCompatActivity activity=(AppCompatActivity)view.getContext();
+                AppCompatActivity activity=(AppCompatActivity)context;
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, FragmentAnimeInfo.newInstance(animeItem.getMal_id())).addToBackStack(null).commit();
             }
         });

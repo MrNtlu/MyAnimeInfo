@@ -1,6 +1,7 @@
 package com.mrntlu.myanimeinfo.view.ui;
 
 import android.os.Bundle;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -18,24 +19,23 @@ import com.mrntlu.myanimeinfo.view.OnToplistLoaded;
 import com.mrntlu.myanimeinfo.view.adapter.AnimeToplistAdapter;
 import com.mrntlu.myanimeinfo.viewmodel.AnimeViewModel;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 public class FragmentTopAnimeList extends Fragment implements OnToplistLoaded {
 
-    private View v;
-    private RecyclerView toplistRV;
-    private Spinner spinner;
+    private static final String TAG = "testJSON";
     private AnimeViewModel viewModel;
-    private AnimeToplistAdapter adapter;
-    private ProgressBar progressBar;
+
+    private WeakReference<ProgressBar> progressBarWeakReference;
+    private WeakReference<RecyclerView> recyclerViewWeakReference;
 
     public FragmentTopAnimeList() {
         // Required empty public constructor
     }
 
     public static FragmentTopAnimeList newInstance() {
-        FragmentTopAnimeList fragment = new FragmentTopAnimeList();
-        return fragment;
+        return new FragmentTopAnimeList();
     }
 
     @Override
@@ -44,12 +44,15 @@ public class FragmentTopAnimeList extends Fragment implements OnToplistLoaded {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        v=inflater.inflate(R.layout.fragment_top_anime_list, container, false);
-        toplistRV=v.findViewById(R.id.toplistRV);
-        spinner=v.findViewById(R.id.spinner);
-        progressBar=v.findViewById(R.id.toplistProgress);
+        View v = inflater.inflate(R.layout.fragment_top_anime_list, container, false);
+        Spinner spinner = v.findViewById(R.id.spinner);
+        final RecyclerView toplistRV= v.findViewById(R.id.toplistRV);
+        final ProgressBar progressBar= v.findViewById(R.id.toplistProgress);
+        progressBarWeakReference=new WeakReference<>(progressBar);
+        recyclerViewWeakReference=new WeakReference<>(toplistRV);
+
         viewModel= ViewModelProviders.of(getActivity()).get(AnimeViewModel.class);
 
         final String[] subtypes = {"All","Airing","Upcoming","TV","Movie", "OVA","Special"};
@@ -78,11 +81,16 @@ public class FragmentTopAnimeList extends Fragment implements OnToplistLoaded {
 
     @Override
     public void onToplistLoaded(List<GETAnimeTopList> topList) {
-        adapter=new AnimeToplistAdapter(getContext(),topList);
-        GridLayoutManager gridLayoutManager=new GridLayoutManager(getActivity(),2);
-        toplistRV.setLayoutManager(gridLayoutManager);
-        toplistRV.setAdapter(adapter);
-        progressBar.setVisibility(View.GONE);
-
+        if (FragmentTopAnimeList.this.isVisible() && FragmentTopAnimeList.this.isAdded() && (FragmentTopAnimeList.this.getView()!=null) && !FragmentTopAnimeList.this.isRemoving()) {
+            RecyclerView weakRV=recyclerViewWeakReference.get();
+            if (weakRV!=null) {
+                ProgressBar weakProgress = progressBarWeakReference.get();
+                if (weakProgress != null) weakProgress.setVisibility(View.GONE);
+                AnimeToplistAdapter adapter = new AnimeToplistAdapter(getContext(), topList);
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+                weakRV.setLayoutManager(gridLayoutManager);
+                weakRV.setAdapter(adapter);
+            }
+        }
     }
 }

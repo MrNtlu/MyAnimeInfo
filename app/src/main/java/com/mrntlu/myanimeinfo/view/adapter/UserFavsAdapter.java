@@ -65,7 +65,7 @@ public class UserFavsAdapter extends RecyclerView.Adapter<UserFavsAdapter.UserFa
             @Override
             public void onClick(View view) {
                 if(status==0){
-                    AppCompatActivity activity=(AppCompatActivity)view.getContext();
+                    AppCompatActivity activity=(AppCompatActivity)context;
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, FragmentAnimeInfo.newInstance(favs.getMal_id())).addToBackStack(null).commit();
                 }
             }

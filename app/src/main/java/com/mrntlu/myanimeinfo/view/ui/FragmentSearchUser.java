@@ -1,6 +1,8 @@
 package com.mrntlu.myanimeinfo.view.ui;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,16 +13,12 @@ import com.mrntlu.myanimeinfo.R;
 
 public class FragmentSearchUser extends Fragment {
 
-    private View v;
-    private SearchView searchView;
-
     public FragmentSearchUser() {
         // Required empty public constructor
     }
 
     public static FragmentSearchUser newInstance() {
-        FragmentSearchUser fragment = new FragmentSearchUser();
-        return fragment;
+        return new FragmentSearchUser();
     }
 
     @Override
@@ -29,16 +27,18 @@ public class FragmentSearchUser extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        v=inflater.inflate(R.layout.fragment_search_user, container, false);
-        searchView=v.findViewById(R.id.searchUser);
+        View v = inflater.inflate(R.layout.fragment_search_user, container, false);
+        SearchView searchView = v.findViewById(R.id.searchUser);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                AppCompatActivity activity=(AppCompatActivity)v.getContext();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, FragmentUserInfo.newInstance(query)).addToBackStack(null).commit();
+                AppCompatActivity activity=(AppCompatActivity)getContext();
+                if (activity != null) {
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, FragmentUserInfo.newInstance(query)).addToBackStack(null).commit();
+                }
                 return false;
             }
 

@@ -41,17 +41,14 @@ import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.CharacterResponseBo
 
 public class MainActivity extends AppCompatActivity {
 
-    private NavigationView navigationView;
     private Toolbar toolbar;
     private DrawerLayout drawerLayout;
     private final String TAG="testJSON";
-    private ActionBarDrawerToggle toggle;
 
     @Override
     public void onBackPressed() {
         int count = getSupportFragmentManager().getBackStackEntryCount();
         //TODO OnBackPressed close searchview
-        Log.d(TAG, "onBackPressed: "+count);
         if (count > 0) {
             getSupportFragmentManager().popBackStackImmediate();
         }
@@ -62,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar=findViewById(R.id.toolbar);
-        navigationView=findViewById(R.id.nav_menu);
+        NavigationView navigationView = findViewById(R.id.nav_menu);
         drawerLayout=findViewById(R.id.drawer_layout);
 
         setSupportActionBar(toolbar);
@@ -88,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment=FragmentSearchUser.newInstance();
                         break;
                     case R.id.anime_schedule:
+                        fragment=FragmentAnimeSchedule.newInstance();
                         break;
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -98,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        toggle=new ActionBarDrawerToggle(MainActivity.this,drawerLayout,toolbar,R.string.open,R.string.close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout, toolbar, R.string.open, R.string.close);
         toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
