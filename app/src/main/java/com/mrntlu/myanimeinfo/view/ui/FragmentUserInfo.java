@@ -134,7 +134,6 @@ public class FragmentUserInfo extends Fragment implements OnUserInfoLoaded {
 
     @Override
     public void onUserNotFound() {
-        //TODO Onusernotfound
         Toast.makeText(getContext().getApplicationContext(), "User Not Found", Toast.LENGTH_SHORT).show();
         getActivity().getSupportFragmentManager().popBackStackImmediate();
     }

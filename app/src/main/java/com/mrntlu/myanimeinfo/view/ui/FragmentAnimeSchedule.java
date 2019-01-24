@@ -1,6 +1,9 @@
 package com.mrntlu.myanimeinfo.view.ui;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -39,7 +42,7 @@ public class FragmentAnimeSchedule extends Fragment implements OnScheduleLoaded 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_anime_schedule, container, false);
         final ViewPager viewPager= v.findViewById(R.id.scheduleViewPager);

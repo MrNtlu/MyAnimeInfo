@@ -18,8 +18,7 @@ public class FragmentAnimeGenres extends Fragment {
     }
 
     public static FragmentAnimeGenres newInstance() {
-        FragmentAnimeGenres fragment = new FragmentAnimeGenres();
-        return fragment;
+        return new FragmentAnimeGenres();
     }
 
     @Override

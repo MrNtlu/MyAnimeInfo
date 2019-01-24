@@ -17,6 +17,8 @@ import com.mrntlu.myanimeinfo.R;
 import com.mrntlu.myanimeinfo.service.model.jsonbody.GETUserFavs;
 import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.UserProfileResponseBody;
 import com.mrntlu.myanimeinfo.view.ui.FragmentAnimeInfo;
+import com.mrntlu.myanimeinfo.view.ui.FragmentCharacterInfo;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -67,6 +69,9 @@ public class UserFavsAdapter extends RecyclerView.Adapter<UserFavsAdapter.UserFa
                 if(status==0){
                     AppCompatActivity activity=(AppCompatActivity)context;
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, FragmentAnimeInfo.newInstance(favs.getMal_id())).addToBackStack(null).commit();
+                }if (status==1){
+                    AppCompatActivity activity=(AppCompatActivity)view.getContext();
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, FragmentCharacterInfo.newInstance(favs.getMal_id())).addToBackStack(null).commit();
                 }
             }
         });

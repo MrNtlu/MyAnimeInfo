@@ -8,36 +8,13 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.RecyclerView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.SearchView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.mrntlu.myanimeinfo.R;
-import com.mrntlu.myanimeinfo.service.model.jsonbody.GETUserAnimelist;
-import com.mrntlu.myanimeinfo.service.model.jsonbody.GETUserFavs;
-import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.UserAnimelistResponseBody;
-import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.UserProfileResponseBody;
-import com.mrntlu.myanimeinfo.service.repository.AnimeAPI;
-import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeByID;
-import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeCharacters;
-import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeGenre;
-import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeReviewByID;
-import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeSearch;
-import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeTopList;
-import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.AnimeGenreBody;
-import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.AnimeResponseBody;
-import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.AnimeReviewsBody;
-import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.AnimeTopListBody;
-import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.CharacterResponseBody;
 
 public class MainActivity extends AppCompatActivity {
 

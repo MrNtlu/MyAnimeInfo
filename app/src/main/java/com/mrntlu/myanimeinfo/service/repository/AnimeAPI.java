@@ -6,7 +6,8 @@ import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.AnimeGenreBody;
 import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.AnimeReviewsBody;
 import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.AnimeScheduleBody;
 import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.AnimeTopListBody;
-import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.CharacterResponseBody;
+import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.AnimeCharactersResponseBody;
+import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.CharacterInfoBody;
 import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.UserAnimelistResponseBody;
 import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.UserProfileResponseBody;
 
@@ -24,7 +25,7 @@ public interface AnimeAPI {
     Call<GETAnimeByID> getAnimeByID(@Path("mal_id") int mal_id);
 
     @GET("anime/{mal_id}/characters_staff")
-    Call<CharacterResponseBody> getCharacterByID(@Path("mal_id") int mal_id);
+    Call<AnimeCharactersResponseBody> getCharacterByID(@Path("mal_id") int mal_id);
 
     @GET("genre/anime/{genreID}/{page}")
     Call<AnimeGenreBody> getGenreByID(@Path("genreID") int genreID,@Path("page") int page);
@@ -43,4 +44,7 @@ public interface AnimeAPI {
 
     @GET("schedule")
     Call<AnimeScheduleBody> getAnimeSchedule();
+
+    @GET("character/{character_id}")
+    Call<CharacterInfoBody> getCharacterInfoByID(@Path("character_id") int character_id);
 }

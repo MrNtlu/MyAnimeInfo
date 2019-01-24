@@ -1,10 +1,15 @@
 package com.mrntlu.myanimeinfo.view.ui;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,9 +46,10 @@ public class FragmentAnimeGenreList extends Fragment implements OnGenreListLoade
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_anime_genre_list, container, false);
+
         final RecyclerView animeGenreRV= v.findViewById(R.id.animeGenreRV);
         final ProgressBar genreProgress= v.findViewById(R.id.genreProgress);
         recyclerViewWeakReference=new WeakReference<>(animeGenreRV);
@@ -52,7 +58,6 @@ public class FragmentAnimeGenreList extends Fragment implements OnGenreListLoade
         genreProgress.setVisibility(View.VISIBLE);
         AnimeViewModel viewModel = ViewModelProviders.of(getActivity()).get(AnimeViewModel.class);
         viewModel.getAnimeByGenre(genreID,1,this);
-
         return v;
     }
 

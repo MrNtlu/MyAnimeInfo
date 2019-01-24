@@ -4,11 +4,11 @@ import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeCharacters;
 
 import java.util.List;
 
-public class CharacterResponseBody {
+public class AnimeCharactersResponseBody {
 
     private List<GETAnimeCharacters> characters;
 
-    public CharacterResponseBody(List<GETAnimeCharacters> characters) {
+    public AnimeCharactersResponseBody(List<GETAnimeCharacters> characters) {
         this.characters = characters;
     }
 

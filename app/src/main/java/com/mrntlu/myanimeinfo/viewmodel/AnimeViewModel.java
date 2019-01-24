@@ -9,12 +9,14 @@ import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.AnimeResponseBody;
 import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.AnimeReviewsBody;
 import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.AnimeScheduleBody;
 import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.AnimeTopListBody;
-import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.CharacterResponseBody;
+import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.AnimeCharactersResponseBody;
+import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.CharacterInfoBody;
 import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.UserAnimelistResponseBody;
 import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.UserProfileResponseBody;
 import com.mrntlu.myanimeinfo.service.repository.AnimeAPI;
 import com.mrntlu.myanimeinfo.view.OnAnimeListLoaded;
 import com.mrntlu.myanimeinfo.view.OnAnimeSearchLoaded;
+import com.mrntlu.myanimeinfo.view.OnCharacterInfoLoaded;
 import com.mrntlu.myanimeinfo.view.OnCharactersLoaded;
 import com.mrntlu.myanimeinfo.view.OnDataLoaded;
 import com.mrntlu.myanimeinfo.view.OnGenreListLoaded;
@@ -42,6 +44,31 @@ public class AnimeViewModel extends AndroidViewModel {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         animeAPI=retrofit.create(AnimeAPI.class);
+    }
+
+    public void getCharacterByID(int characterID, final OnCharacterInfoLoaded onCharacterInfoLoaded){
+        Call<CharacterInfoBody> call=animeAPI.getCharacterInfoByID(characterID);
+
+        call.enqueue(new Callback<CharacterInfoBody>() {
+            @Override
+            public void onResponse(@NonNull Call<CharacterInfoBody> call, @NonNull Response<CharacterInfoBody> response) {
+                if (!response.isSuccessful()){
+                    //TODO error check
+                    onCharacterInfoLoaded.onFailedToLoad();
+                    Log.d(TAG, "onResponse: "+response.code()+" "+response.message()+" "+call.request());
+                    return;
+                }
+
+                onCharacterInfoLoaded.onCharacterInfoLoaded(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<CharacterInfoBody> call, Throwable t) {
+                Log.d(TAG, "onFailure: "+t.getMessage()+" "+
+                        call.request().toString());
+                onCharacterInfoLoaded.onFailedToLoad();
+            }
+        });
     }
 
     public void getAnimeSchedule(final OnScheduleLoaded onScheduleLoaded){
@@ -88,6 +115,7 @@ public class AnimeViewModel extends AndroidViewModel {
             public void onFailure(Call<UserAnimelistResponseBody> call, Throwable t) {
                 Log.d(TAG, "onFailure: "+t.getMessage()+" "+
                         call.request().toString());
+                onAnimeListLoaded.onFailedToLoad();
             }
         });
     }
@@ -101,7 +129,6 @@ public class AnimeViewModel extends AndroidViewModel {
                 if (!response.isSuccessful()){
                     //TODO SendBack
                     onUserInfoLoaded.onUserNotFound();
-                    Log.d(TAG, "onResponseNotSuccessful: "+response.code()+" "+response.message()+" "+call.request());
                     return;
                 }
                 onUserInfoLoaded.onUserInfoLoaded(response.body());
@@ -111,6 +138,7 @@ public class AnimeViewModel extends AndroidViewModel {
             public void onFailure(Call<UserProfileResponseBody> call, Throwable t) {
                 Log.d(TAG, "onFailure: "+t.getMessage()+" "+
                         call.request().toString());
+                onUserInfoLoaded.onUserNotFound();
             }
         });
     }
@@ -122,6 +150,7 @@ public class AnimeViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<AnimeTopListBody> call, Response<AnimeTopListBody> response) {
                 if (!response.isSuccessful()){
+                    //TODO Error
                     return;
                 }
 
@@ -145,6 +174,7 @@ public class AnimeViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<AnimeReviewsBody> call, Response<AnimeReviewsBody> response) {
                 if (!response.isSuccessful()){
+                    //TODO Error
                     return;
                 }
 
@@ -166,11 +196,13 @@ public class AnimeViewModel extends AndroidViewModel {
 
         call.enqueue(new Callback<AnimeGenreBody>() {
             @Override
-            public void onResponse(Call<AnimeGenreBody> call, Response<AnimeGenreBody> response) {
+            public void onResponse(@NonNull Call<AnimeGenreBody> call, @NonNull Response<AnimeGenreBody> response) {
                 if (!response.isSuccessful()){
+                    //TODO Too many requests!!!
+                    Log.d(TAG, response.message()+" "+call.request());
                     return;
                 }
-
+                Log.d(TAG, "onResponse: success");
                 AnimeGenreBody body=response.body();
                 onGenreListLoaded.onGenreListLoaded(body.getAnime());
             }
@@ -206,21 +238,21 @@ public class AnimeViewModel extends AndroidViewModel {
     }
 
     public void getAnimeCharacters(int mal_id, final OnCharactersLoaded onCharactersLoaded){
-        Call<CharacterResponseBody> call=animeAPI.getCharacterByID(mal_id);
+        Call<AnimeCharactersResponseBody> call=animeAPI.getCharacterByID(mal_id);
 
-        call.enqueue(new Callback<CharacterResponseBody>() {
+        call.enqueue(new Callback<AnimeCharactersResponseBody>() {
             @Override
-            public void onResponse(Call<CharacterResponseBody> call, Response<CharacterResponseBody> response) {
+            public void onResponse(Call<AnimeCharactersResponseBody> call, Response<AnimeCharactersResponseBody> response) {
                 if (!response.isSuccessful()){
                     return;
                 }
 
-                CharacterResponseBody body=response.body();
+                AnimeCharactersResponseBody body=response.body();
                 onCharactersLoaded.onCharactersLoaded(body.getCharacters());
             }
 
             @Override
-            public void onFailure(Call<CharacterResponseBody> call, Throwable t) {
+            public void onFailure(Call<AnimeCharactersResponseBody> call, Throwable t) {
                 //TODO Toast
                 Log.d(TAG, "onFailure: "+t.getMessage()+" "+
                         call.request().toString());
