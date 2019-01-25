@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">MyAnimeInfo</string>
+    <string name="base_url">https://api.jikan.moe/v3/</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="overall">Overall:</string>
+    <string name="story">Story:</string>
+    <string name="sound">Sound:</string>
+    <string name="enjoyment">Enjoyment:</string>
+    <string name="character">Character:</string>
+    <string name="animation">Animation:</string>
+    <string name="watched_episodes">Watched Episodes:</string>
+    <string name="watching_status">Watching Status:</string>
+    <string name="given_score">Given Score:</string>
+    <string name="anime_top_list">Anime Top List</string>
+    <string name="anime_by_genre">Anime by Genre</string>
+    <string name="anime_schedule">Anime Schedule</string>
+    <string name="search">Search</string>
+    <string name="search_anime">Search Anime</string>
+    <string name="search_user">Search User</string>
+    <string name="synopsis">Synopsis:</string>
+    <string name="background">Background:</string>
+    <string name="no_relation_found">No Relation Found</string>
+    <string name="others">Others</string>
+    <string name="prequels">Prequels</string>
+    <string name="sequels">Sequels</string>
+
+</resources>
