@@ -3,35 +3,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <group>
         <item
-            android:title="Anime Top List"
+            android:title="@string/anime_top_list"
             app:showAsAction="ifRoom"
             android:icon="@drawable/ic_oscar"
             android:id="@+id/anime_top_list"/>
 
         <item
-            android:title="Anime by Genre"
+            android:title="@string/anime_by_genre"
             app:showAsAction="ifRoom"
             android:icon="@drawable/ic_popcorn"
             android:id="@+id/anime_by_genre"/>
         <item
-            android:title="Anime Schedule"
+            android:title="@string/anime_schedule"
             app:showAsAction="ifRoom"
-            android:icon="@drawable/ic_calendar"
+            android:icon="@drawable/ic_calendar_small"
             android:id="@+id/anime_schedule"/>
 
     </group>
 
-    <item android:title="Search">
+    <item android:title="@string/search">
         <menu>
             <item
-                android:title="Search Anime"
+                android:title="@string/search_anime"
                 app:showAsAction="ifRoom"
-                android:icon="@drawable/ic_launcher_foreground"
+                android:icon="@drawable/ic_magnifying_glass"
                 android:id="@+id/search_anime"/>
             <item
-                android:title="Search User"
+                android:title="@string/search_user"
                 app:showAsAction="ifRoom"
-                android:icon="@drawable/ic_launcher_foreground"
+                android:icon="@drawable/ic_anime_boy_with_tie"
                 android:id="@+id/search_user"/>
         </menu>
     </item>

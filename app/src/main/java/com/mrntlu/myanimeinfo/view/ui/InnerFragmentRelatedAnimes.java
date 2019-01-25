@@ -1,7 +1,9 @@
 package com.mrntlu.myanimeinfo.view.ui;
 
 import android.os.Bundle;
-import androidx.constraintlayout.widget.ConstraintLayout;
+
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,12 +39,12 @@ public class InnerFragmentRelatedAnimes extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_inner_related_animes, container, false);
-        ConstraintLayout othersLayout = v.findViewById(R.id.adaptationsLayout);
-        ConstraintLayout prequelsLayout = v.findViewById(R.id.prequelsLayout);
-        ConstraintLayout sequelsLayout = v.findViewById(R.id.sequelsLayout);
+        CardView othersLayout = v.findViewById(R.id.adaptationsLayout);
+        CardView prequelsLayout = v.findViewById(R.id.prequelsLayout);
+        CardView sequelsLayout = v.findViewById(R.id.sequelsLayout);
         RecyclerView othersRV = v.findViewById(R.id.adaptationsRV);
         RecyclerView prequelsRV= v.findViewById(R.id.prequelsRV);
         RecyclerView sequelsRV= v.findViewById(R.id.sequelsRV);

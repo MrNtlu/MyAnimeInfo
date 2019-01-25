@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -90,7 +91,7 @@ public class FragmentCharacterInfo extends Fragment implements OnCharacterInfoLo
         if (FragmentCharacterInfo.this.isVisible() && (FragmentCharacterInfo.this.getView()!=null)) {
             RecyclerView weakRV = recyclerViewWeakReference.get();
             final ProgressBar weakProgress = progressBarWeakReference.get();
-            ImageView weakImageView = imageViewWeakReference.get();
+            final ImageView weakImageView = imageViewWeakReference.get();
             ConstraintLayout weakConstraint=constraintLayoutWeakReference.get();
             if (weakRV!=null && weakProgress!=null && weakImageView!=null && weakConstraint!=null) {
 
@@ -114,6 +115,7 @@ public class FragmentCharacterInfo extends Fragment implements OnCharacterInfoLo
                 Glide.with(getContext()).load(body.getImage_url()).addListener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        weakImageView.setImageResource(R.drawable.ic_no_picture);
                         weakProgress.setVisibility(View.GONE);
                         return false;
                     }
@@ -131,6 +133,7 @@ public class FragmentCharacterInfo extends Fragment implements OnCharacterInfoLo
 
     @Override
     public void onFailedToLoad() {
-
+        Toast.makeText(getContext().getApplicationContext(), "Error! Too many requests.", Toast.LENGTH_SHORT).show();
+        getActivity().getSupportFragmentManager().popBackStackImmediate();
     }
 }

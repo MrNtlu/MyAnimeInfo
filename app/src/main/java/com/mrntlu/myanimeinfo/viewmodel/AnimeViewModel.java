@@ -53,9 +53,7 @@ public class AnimeViewModel extends AndroidViewModel {
             @Override
             public void onResponse(@NonNull Call<CharacterInfoBody> call, @NonNull Response<CharacterInfoBody> response) {
                 if (!response.isSuccessful()){
-                    //TODO error check
                     onCharacterInfoLoaded.onFailedToLoad();
-                    Log.d(TAG, "onResponse: "+response.code()+" "+response.message()+" "+call.request());
                     return;
                 }
 
@@ -63,7 +61,7 @@ public class AnimeViewModel extends AndroidViewModel {
             }
 
             @Override
-            public void onFailure(Call<CharacterInfoBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<CharacterInfoBody> call, @NonNull Throwable t) {
                 Log.d(TAG, "onFailure: "+t.getMessage()+" "+
                         call.request().toString());
                 onCharacterInfoLoaded.onFailedToLoad();
@@ -76,10 +74,9 @@ public class AnimeViewModel extends AndroidViewModel {
 
         call.enqueue(new Callback<AnimeScheduleBody>() {
             @Override
-            public void onResponse(Call<AnimeScheduleBody> call, Response<AnimeScheduleBody> response) {
+            public void onResponse(@NonNull Call<AnimeScheduleBody> call, @NonNull Response<AnimeScheduleBody> response) {
                 if (!response.isSuccessful()){
-                    //TODO error check
-                    Log.d(TAG, "onResponse: "+response.code()+" "+response.message()+" "+call.request());
+                    onScheduleLoaded.onFailedToLoad();
                     return;
                 }
 
@@ -87,10 +84,8 @@ public class AnimeViewModel extends AndroidViewModel {
             }
 
             @Override
-            public void onFailure(Call<AnimeScheduleBody> call, Throwable t) {
-                //TODO
-                Log.d(TAG, "onFailure: "+t.getMessage()+" "+
-                        call.request().toString());
+            public void onFailure(@NonNull Call<AnimeScheduleBody> call, @NonNull Throwable t) {
+                onScheduleLoaded.onFailedToLoad();
             }
         });
     }
@@ -100,9 +95,8 @@ public class AnimeViewModel extends AndroidViewModel {
 
         call.enqueue(new Callback<UserAnimelistResponseBody>() {
             @Override
-            public void onResponse(Call<UserAnimelistResponseBody> call, Response<UserAnimelistResponseBody> response) {
+            public void onResponse(@NonNull Call<UserAnimelistResponseBody> call, @NonNull Response<UserAnimelistResponseBody> response) {
                 if (!response.isSuccessful()){
-                    //TODO error check
                     onAnimeListLoaded.onFailedToLoad();
                     return;
                 }
@@ -112,7 +106,7 @@ public class AnimeViewModel extends AndroidViewModel {
             }
 
             @Override
-            public void onFailure(Call<UserAnimelistResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<UserAnimelistResponseBody> call, @NonNull Throwable t) {
                 Log.d(TAG, "onFailure: "+t.getMessage()+" "+
                         call.request().toString());
                 onAnimeListLoaded.onFailedToLoad();
@@ -125,9 +119,8 @@ public class AnimeViewModel extends AndroidViewModel {
 
         call.enqueue(new Callback<UserProfileResponseBody>() {
             @Override
-            public void onResponse(Call<UserProfileResponseBody> call, Response<UserProfileResponseBody> response) {
+            public void onResponse(@NonNull Call<UserProfileResponseBody> call, @NonNull Response<UserProfileResponseBody> response) {
                 if (!response.isSuccessful()){
-                    //TODO SendBack
                     onUserInfoLoaded.onUserNotFound();
                     return;
                 }
@@ -135,9 +128,7 @@ public class AnimeViewModel extends AndroidViewModel {
             }
 
             @Override
-            public void onFailure(Call<UserProfileResponseBody> call, Throwable t) {
-                Log.d(TAG, "onFailure: "+t.getMessage()+" "+
-                        call.request().toString());
+            public void onFailure(@NonNull Call<UserProfileResponseBody> call, @NonNull Throwable t) {
                 onUserInfoLoaded.onUserNotFound();
             }
         });
@@ -148,9 +139,9 @@ public class AnimeViewModel extends AndroidViewModel {
 
         call.enqueue(new Callback<AnimeTopListBody>() {
             @Override
-            public void onResponse(Call<AnimeTopListBody> call, Response<AnimeTopListBody> response) {
+            public void onResponse(@NonNull Call<AnimeTopListBody> call, @NonNull Response<AnimeTopListBody> response) {
                 if (!response.isSuccessful()){
-                    //TODO Error
+                    onToplistLoaded.onFailedToLoad();
                     return;
                 }
 
@@ -159,10 +150,8 @@ public class AnimeViewModel extends AndroidViewModel {
             }
 
             @Override
-            public void onFailure(Call<AnimeTopListBody> call, Throwable t) {
-                //TODO Toast
-                Log.d(TAG, "onFailure: "+t.getMessage()+" "+
-                        call.request().toString());
+            public void onFailure(@NonNull Call<AnimeTopListBody> call, @NonNull Throwable t) {
+                onToplistLoaded.onFailedToLoad();
             }
         });
     }
@@ -172,9 +161,9 @@ public class AnimeViewModel extends AndroidViewModel {
 
         call.enqueue(new Callback<AnimeReviewsBody>() {
             @Override
-            public void onResponse(Call<AnimeReviewsBody> call, Response<AnimeReviewsBody> response) {
+            public void onResponse(@NonNull Call<AnimeReviewsBody> call, @NonNull Response<AnimeReviewsBody> response) {
                 if (!response.isSuccessful()){
-                    //TODO Error
+                    onReviewsLoaded.onFailedToLoad();
                     return;
                 }
 
@@ -183,10 +172,8 @@ public class AnimeViewModel extends AndroidViewModel {
             }
 
             @Override
-            public void onFailure(Call<AnimeReviewsBody> call, Throwable t) {
-                //TODO Toast
-                Log.d(TAG, "onFailure: "+t.getMessage()+" "+
-                        call.request().toString());
+            public void onFailure(@NonNull Call<AnimeReviewsBody> call, @NonNull Throwable t) {
+                onReviewsLoaded.onFailedToLoad();
             }
         });
     }
@@ -198,20 +185,17 @@ public class AnimeViewModel extends AndroidViewModel {
             @Override
             public void onResponse(@NonNull Call<AnimeGenreBody> call, @NonNull Response<AnimeGenreBody> response) {
                 if (!response.isSuccessful()){
-                    //TODO Too many requests!!!
-                    Log.d(TAG, response.message()+" "+call.request());
+                    onGenreListLoaded.onFailedToLoad();
                     return;
                 }
-                Log.d(TAG, "onResponse: success");
+
                 AnimeGenreBody body=response.body();
                 onGenreListLoaded.onGenreListLoaded(body.getAnime());
             }
 
             @Override
-            public void onFailure(Call<AnimeGenreBody> call, Throwable t) {
-                //TODO Toast
-                Log.d(TAG, "onFailure: "+t.getMessage()+" "+
-                        call.request().toString());
+            public void onFailure(@NonNull Call<AnimeGenreBody> call, @NonNull Throwable t) {
+                onGenreListLoaded.onFailedToLoad();
             }
         });
     }
@@ -221,18 +205,17 @@ public class AnimeViewModel extends AndroidViewModel {
 
         call.enqueue(new Callback<GETAnimeByID>() {
             @Override
-            public void onResponse(Call<GETAnimeByID> call, Response<GETAnimeByID> response) {
+            public void onResponse(@NonNull Call<GETAnimeByID> call, @NonNull Response<GETAnimeByID> response) {
                 if (!response.isSuccessful()){
+                    onDataLoaded.onFailedToLoad();
                     return;
                 }
                 onDataLoaded.isDataLoaded(response.body());
             }
 
             @Override
-            public void onFailure(Call<GETAnimeByID> call, Throwable t) {
-                //TODO Toast
-                Log.d(TAG, "onFailure: "+t.getMessage()+" "+
-                        call.request().toString());
+            public void onFailure(@NonNull Call<GETAnimeByID> call, @NonNull Throwable t) {
+                onDataLoaded.onFailedToLoad();
             }
         });
     }
@@ -242,8 +225,9 @@ public class AnimeViewModel extends AndroidViewModel {
 
         call.enqueue(new Callback<AnimeCharactersResponseBody>() {
             @Override
-            public void onResponse(Call<AnimeCharactersResponseBody> call, Response<AnimeCharactersResponseBody> response) {
+            public void onResponse(@NonNull Call<AnimeCharactersResponseBody> call, @NonNull Response<AnimeCharactersResponseBody> response) {
                 if (!response.isSuccessful()){
+                    onCharactersLoaded.onFailedToLoad();
                     return;
                 }
 
@@ -252,10 +236,8 @@ public class AnimeViewModel extends AndroidViewModel {
             }
 
             @Override
-            public void onFailure(Call<AnimeCharactersResponseBody> call, Throwable t) {
-                //TODO Toast
-                Log.d(TAG, "onFailure: "+t.getMessage()+" "+
-                        call.request().toString());
+            public void onFailure(@NonNull Call<AnimeCharactersResponseBody> call, @NonNull Throwable t) {
+                onCharactersLoaded.onFailedToLoad();
             }
         });
     }
@@ -265,16 +247,17 @@ public class AnimeViewModel extends AndroidViewModel {
 
         call.enqueue(new Callback<AnimeResponseBody>() {
             @Override
-            public void onResponse(Call<AnimeResponseBody> call, Response<AnimeResponseBody> response) {
+            public void onResponse(@NonNull Call<AnimeResponseBody> call, @NonNull Response<AnimeResponseBody> response) {
                 if (!response.isSuccessful()){
+                    onAnimeSearchLoaded.onFailedToLoad();
                     return;
                 }
                 onAnimeSearchLoaded.onAnimeSearchLoaded(response.body());
             }
 
             @Override
-            public void onFailure(Call<AnimeResponseBody> call, Throwable t) {
-
+            public void onFailure(@NonNull Call<AnimeResponseBody> call, @NonNull Throwable t) {
+                onAnimeSearchLoaded.onFailedToLoad();
             }
         });
     }

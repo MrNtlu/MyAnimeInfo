@@ -1,16 +1,22 @@
 package com.mrntlu.myanimeinfo.view.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.mrntlu.myanimeinfo.R;
 import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeReviewByID;
 import java.util.List;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class InnerAnimeReviewsAdapter extends RecyclerView.Adapter<InnerAnimeReviewsAdapter.ReviewsViewHolder> {
@@ -34,7 +40,19 @@ public class InnerAnimeReviewsAdapter extends RecyclerView.Adapter<InnerAnimeRev
     public void onBindViewHolder(@NonNull final ReviewsViewHolder holder, int position) {
         GETAnimeReviewByID animeReview=animeReviews.get(position);
         GETAnimeReviewByID.Reviewer reviewer=animeReview.getReviewer();
-        Glide.with(context).load(reviewer.getImage_url()).into(holder.userImage);
+        Glide.with(context).load(reviewer.getImage_url()).listener(new RequestListener<Drawable>() {
+            @Override
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                holder.userImage.setImageResource(R.drawable.ic_no_picture);
+                return false;
+            }
+
+            @Override
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                return false;
+            }
+        }).into(holder.userImage);
+
         holder.usernameText.setText(reviewer.getUsername());
         holder.reviewText.setText(animeReview.getContent());
         //Scores

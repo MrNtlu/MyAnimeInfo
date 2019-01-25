@@ -57,6 +57,7 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
         Glide.with(context).load(searchItem.getImage_url()).addListener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                holder.imageView.setImageResource(R.drawable.ic_no_picture);
                 holder.progressBar.setVisibility(View.GONE);
                 return false;
             }

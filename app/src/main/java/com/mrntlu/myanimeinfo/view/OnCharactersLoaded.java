@@ -8,5 +8,5 @@ public interface OnCharactersLoaded {
 
     void onCharactersLoaded(List<GETAnimeCharacters> getAnimeCharacters);
 
-    //TODO OnFailedToLoad
+    void onFailedToLoad();
 }

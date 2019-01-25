@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -96,7 +98,7 @@ public class FragmentAnimeInfo extends Fragment implements OnDataLoaded {
             ViewPager weakViewPager = viewPagerWeakReference.get();
             TabLayout weakTabLayout = tabLayoutWeakReference.get();
             ConstraintLayout weakConstraint = constraintLayoutWeakReference.get();
-            ImageView weakImageView = imageViewWeakReference.get();
+            final ImageView weakImageView = imageViewWeakReference.get();
             final ProgressBar weakProgress=progressBarWeakReference.get();
 
             TextView animeTitle=weakAnimeTitle.get();
@@ -117,6 +119,7 @@ public class FragmentAnimeInfo extends Fragment implements OnDataLoaded {
                 Glide.with(getContext()).load(getAnimeByID.getImage_url()).addListener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        weakImageView.setImageResource(R.drawable.ic_no_picture);
                         weakProgress.setVisibility(View.GONE);
                         return false;
                     }
@@ -137,8 +140,15 @@ public class FragmentAnimeInfo extends Fragment implements OnDataLoaded {
                 if (rankText!=null) rankText.setText(String.valueOf(getAnimeByID.getRank()));
                 if (favsText!=null) favsText.setText(String.valueOf(getAnimeByID.getFavorites()));
                 if (statusText!=null) statusText.setText(getAnimeByID.getStatus());
-                if (premieredText!=null) premieredText.setText("Premiered: " + getAnimeByID.getPremiered());
+                String premiered="Premiered: " + getAnimeByID.getPremiered();
+                if (premieredText!=null) premieredText.setText(premiered);
             }
         }
+    }
+
+    @Override
+    public void onFailedToLoad() {
+        Toast.makeText(getContext().getApplicationContext(), "Error! Too many requests.", Toast.LENGTH_SHORT).show();
+        getActivity().getSupportFragmentManager().popBackStackImmediate();
     }
 }

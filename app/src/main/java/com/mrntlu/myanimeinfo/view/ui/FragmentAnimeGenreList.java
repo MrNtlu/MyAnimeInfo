@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
 import com.mrntlu.myanimeinfo.R;
 import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeGenre;
 import com.mrntlu.myanimeinfo.view.OnGenreListLoaded;
@@ -74,5 +76,11 @@ public class FragmentAnimeGenreList extends Fragment implements OnGenreListLoade
                 weakProgress.setVisibility(View.GONE);
             }
         }
+    }
+
+    @Override
+    public void onFailedToLoad() {
+        Toast.makeText(getContext().getApplicationContext(), "Error! Too many requests.", Toast.LENGTH_SHORT).show();
+        getActivity().getSupportFragmentManager().popBackStackImmediate();
     }
 }

@@ -53,6 +53,7 @@ public class UserFavsAdapter extends RecyclerView.Adapter<UserFavsAdapter.UserFa
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 holder.progressBar.setVisibility(View.GONE);
+                holder.imageView.setImageResource(R.drawable.ic_no_picture);
                 return false;
             }
 
@@ -92,7 +93,7 @@ public class UserFavsAdapter extends RecyclerView.Adapter<UserFavsAdapter.UserFa
         ImageView imageView;
         ProgressBar progressBar;
 
-        public UserFavsViewHolder(@NonNull View itemView) {
+        UserFavsViewHolder(@NonNull View itemView) {
             super(itemView);
             titleText=itemView.findViewById(R.id.titleText);
             imageView=itemView.findViewById(R.id.imageView);

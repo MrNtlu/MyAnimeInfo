@@ -57,6 +57,7 @@ public class UserAnimeListAdapter extends RecyclerView.Adapter<UserAnimeListAdap
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 holder.progressBar.setVisibility(View.GONE);
+                holder.animeImage.setImageResource(R.drawable.ic_no_picture);
                 return false;
             }
 
@@ -66,7 +67,9 @@ public class UserAnimeListAdapter extends RecyclerView.Adapter<UserAnimeListAdap
                 return false;
             }
         }).into(holder.animeImage);
-        holder.watchedEpisodesText.setText(userAnime.getWatched_episodes()+"/"+userAnime.getTotal_episodes());
+
+        String watchedEpisodes=userAnime.getWatched_episodes()+"/"+userAnime.getTotal_episodes();
+        holder.watchedEpisodesText.setText(watchedEpisodes);
         holder.givenScoreText.setText(String.valueOf(userAnime.getScore()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

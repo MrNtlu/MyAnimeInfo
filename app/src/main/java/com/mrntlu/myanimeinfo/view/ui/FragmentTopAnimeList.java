@@ -14,6 +14,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
+
 import com.mrntlu.myanimeinfo.R;
 import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeTopList;
 import com.mrntlu.myanimeinfo.view.OnToplistLoaded;
@@ -93,5 +95,11 @@ public class FragmentTopAnimeList extends Fragment implements OnToplistLoaded {
                 weakRV.setAdapter(adapter);
             }
         }
+    }
+
+    @Override
+    public void onFailedToLoad() {
+        Toast.makeText(getContext().getApplicationContext(), "Error! Too many requests.", Toast.LENGTH_SHORT).show();
+        getActivity().getSupportFragmentManager().popBackStackImmediate();
     }
 }

@@ -8,11 +8,9 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-
 import com.google.android.material.navigation.NavigationView;
 import com.mrntlu.myanimeinfo.R;
 
@@ -25,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         int count = getSupportFragmentManager().getBackStackEntryCount();
-        //TODO OnBackPressed close searchview
         if (count > 0) {
             getSupportFragmentManager().popBackStackImmediate();
         }

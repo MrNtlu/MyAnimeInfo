@@ -7,4 +7,6 @@ import java.util.List;
 public interface OnReviewsLoaded {
 
     void onReviewsLoaded(List<GETAnimeReviewByID> getAnimeReviewByID);
+
+    void onFailedToLoad();
 }

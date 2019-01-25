@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.Toast;
+
 import com.mrntlu.myanimeinfo.R;
 import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeSearch;
 import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.AnimeResponseBody;
@@ -115,5 +117,11 @@ public class FragmentSearchAnime extends Fragment implements OnAnimeSearchLoaded
                 weakAdapter.notifyDataSetChanged();
             }
         }
+    }
+
+    @Override
+    public void onFailedToLoad() {
+        Toast.makeText(getContext().getApplicationContext(), "Error! Too many requests.", Toast.LENGTH_SHORT).show();
+        getActivity().getSupportFragmentManager().popBackStackImmediate();
     }
 }

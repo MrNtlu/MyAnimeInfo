@@ -6,4 +6,6 @@ import java.util.List;
 public interface OnToplistLoaded {
 
     void onToplistLoaded(List<GETAnimeTopList> topList);
+
+    void onFailedToLoad();
 }

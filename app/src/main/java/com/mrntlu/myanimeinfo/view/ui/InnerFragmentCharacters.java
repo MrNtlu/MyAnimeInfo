@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
 import com.mrntlu.myanimeinfo.R;
 import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeCharacters;
 import com.mrntlu.myanimeinfo.view.OnCharactersLoaded;
@@ -71,5 +73,10 @@ public class InnerFragmentCharacters extends Fragment implements OnCharactersLoa
                 weakProgress.setVisibility(View.GONE);
             }
         }
+    }
+
+    @Override
+    public void onFailedToLoad() {
+        Toast.makeText(getContext().getApplicationContext(), "Error! Characters couldn't loaded, try again.", Toast.LENGTH_SHORT).show();
     }
 }

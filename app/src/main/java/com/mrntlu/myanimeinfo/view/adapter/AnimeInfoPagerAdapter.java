@@ -29,10 +29,10 @@ public class AnimeInfoPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 returnFragment= InnerFragmentAnimeInfo.newInstance(animeByID.getSynopsis(),animeByID.getBackground());
                 break;
-            case 1:
+            case 2:
                 returnFragment= InnerFragmentRelatedAnimes.newInstance(animeByID.getRelated());
                 break;
-            case 2:
+            case 1:
                 returnFragment= InnerFragmentCharacters.newInstance(animeByID.getMal_id());
                 break;
             case 3:
@@ -52,10 +52,10 @@ public class AnimeInfoPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 title="Info";
                 break;
-            case 1:
+            case 2:
                 title="Related ANIMES";
                 break;
-            case 2:
+            case 1:
                 title="Characters";
                 break;
             case 3:

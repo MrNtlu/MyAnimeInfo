@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#2c3e50</color>
 
     <color name="midnightblue">#2c3e50</color>
     <color name="lightblue">#6a99cb</color>
@@ -11,5 +11,6 @@
     <color name="darkblue">#487eb0</color>
     <color name="logoblue">#2c9fff</color>
 
+    <color name="orange_launcher">#FFA000</color>
     <color name="transparent_black">#CC000000</color>
 </resources>

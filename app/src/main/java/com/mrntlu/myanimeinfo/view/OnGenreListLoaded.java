@@ -6,4 +6,6 @@ import java.util.List;
 public interface OnGenreListLoaded {
 
     void onGenreListLoaded(List<GETAnimeGenre> animeGenres);
+
+    void onFailedToLoad();
 }

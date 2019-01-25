@@ -1,7 +1,6 @@
 package com.mrntlu.myanimeinfo.view.ui;
 
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -11,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
 import com.mrntlu.myanimeinfo.R;
 import com.mrntlu.myanimeinfo.service.model.jsonbody.GETAnimeReviewByID;
 import com.mrntlu.myanimeinfo.view.OnReviewsLoaded;
@@ -74,5 +75,10 @@ public class InnerFragmentAnimeReviews extends Fragment implements OnReviewsLoad
                 weakProgress.setVisibility(View.GONE);
             }
         }
+    }
+
+    @Override
+    public void onFailedToLoad() {
+        Toast.makeText(getContext().getApplicationContext(), "Error! Reviews couldn't loaded, try again.", Toast.LENGTH_SHORT).show();
     }
 }

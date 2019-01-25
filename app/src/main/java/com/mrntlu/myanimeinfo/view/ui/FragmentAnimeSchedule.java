@@ -11,6 +11,8 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import com.google.android.material.tabs.TabLayout;
 import com.mrntlu.myanimeinfo.R;
 import com.mrntlu.myanimeinfo.service.model.jsonresponsebody.AnimeScheduleBody;
@@ -31,9 +33,7 @@ public class FragmentAnimeSchedule extends Fragment implements OnScheduleLoaded 
         // Required empty public constructor
     }
     public static FragmentAnimeSchedule newInstance() {
-        FragmentAnimeSchedule fragment = new FragmentAnimeSchedule();
-
-        return fragment;
+        return new FragmentAnimeSchedule();
     }
 
     @Override
@@ -107,5 +107,11 @@ public class FragmentAnimeSchedule extends Fragment implements OnScheduleLoaded 
                 }
             }
         }
+    }
+
+    @Override
+    public void onFailedToLoad() {
+        Toast.makeText(getContext().getApplicationContext(), "Error! Too many requests.", Toast.LENGTH_SHORT).show();
+        getActivity().getSupportFragmentManager().popBackStackImmediate();
     }
 }

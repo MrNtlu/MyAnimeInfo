@@ -98,7 +98,7 @@ public class FragmentUserInfo extends Fragment implements OnUserInfoLoaded {
         if (FragmentUserInfo.this.isVisible()) {
             ViewPager weakViewPager = viewPagerWeakReference.get();
             TabLayout weakTabLayout = tabLayoutWeakReference.get();
-            ImageView weakImageView = imageViewWeakReference.get();
+            final ImageView weakImageView = imageViewWeakReference.get();
             final ConstraintLayout weakConstraint = constraintLayoutWeakReference.get();
             final ProgressBar weakProgress=progressBarWeakReference.get();
 
@@ -115,19 +115,18 @@ public class FragmentUserInfo extends Fragment implements OnUserInfoLoaded {
                 Glide.with(getContext()).load(profileBody.getImage_url()).addListener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        //TODO NoPicture
+                        weakImageView.setImageResource(R.drawable.ic_no_picture);
                         weakProgress.setVisibility(View.GONE);
-                        weakConstraint.setVisibility(View.GONE);
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                         weakProgress.setVisibility(View.GONE);
-                        weakConstraint.setVisibility(View.GONE);
                         return false;
                     }
                 }).into(weakImageView);
+                weakConstraint.setVisibility(View.GONE);
             }
         }
     }
