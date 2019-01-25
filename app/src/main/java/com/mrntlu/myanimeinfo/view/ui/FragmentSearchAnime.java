@@ -84,12 +84,14 @@ public class FragmentSearchAnime extends Fragment implements OnAnimeSearchLoaded
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                if (s.length() > 0) {
+                if (s.length() >= 3) {
                     recyclerView.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.VISIBLE);
                     viewModel.searchAnime(s, 1, FragmentSearchAnime.this);
-                } else {
+                }else if (s.length()==0){
                     recyclerView.setVisibility(View.GONE);
+                }else{
+                    Toast.makeText(getContext(), "Search length should be bigger than or equal to 3", Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }

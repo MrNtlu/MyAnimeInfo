@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.Toast;
+
 import com.mrntlu.myanimeinfo.R;
 
 public class FragmentSearchUser extends Fragment {
@@ -35,9 +37,13 @@ public class FragmentSearchUser extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                AppCompatActivity activity=(AppCompatActivity)getContext();
-                if (activity != null) {
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, FragmentUserInfo.newInstance(query)).addToBackStack(null).commit();
+                if (query.length()>=3) {
+                    AppCompatActivity activity = (AppCompatActivity) getContext();
+                    if (activity != null) {
+                        activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, FragmentUserInfo.newInstance(query)).addToBackStack(null).commit();
+                    }
+                } else{
+                    Toast.makeText(getContext(), "Search length should be bigger than or equal to 3", Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }
